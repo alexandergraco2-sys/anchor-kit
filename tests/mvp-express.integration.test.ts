@@ -183,6 +183,12 @@ describe('MVP Express-mounted integration', () => {
     expect(response.body.version).toBe(version);
   });
 
+  it('1b) unknown endpoint returns 404 not_found', async () => {
+    const response = await invoke({ path: '/does-not-exist' });
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: 'not_found', message: 'Endpoint not found' });
+  });
+
   it('2) /info returns configured assets and package version', async () => {
     const response = await invoke({ path: '/info' });
     expect(response.status).toBe(200);
